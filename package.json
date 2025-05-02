@@ -1,0 +1,12 @@
+{
+  "name": "rg-k6",
+  "version": "1.0.0",
+  "description": "Нагрузочное тестирование с использованием k6",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "node src/run-testing.js"
+  },
+  "keywords": [],
+  "author": "Zaha250",
+  "license": "ISC"
+}
