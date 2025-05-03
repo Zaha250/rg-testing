@@ -1,6 +1,7 @@
 export const USERS = [
     {
-        login: 'a.koltunov@rozentalgroup.ru',
-        password: '123456aB',
+        login: 'nkt_admin',
+        password: 'DkfLdtNsc123',
+        companyId: 4020779
     }
 ];

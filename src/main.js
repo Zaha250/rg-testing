@@ -1,7 +1,7 @@
-import {group} from 'k6';
 import {htmlReport} from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
-import {myPersonalData} from './api/services/myPersonalData.js';
 import {USERS} from "./api/request/users.js";
+import {commonGroup} from "./groups/lk/common.js";
+import {dispDashboardGroup} from "./groups/lk/dispDashboard.js";
 
 export const options = {
     scenarios: {
@@ -14,14 +14,15 @@ export const options = {
 };
 
 export default function () {
-    group('Общие PHP сервисы', function () {
-        myPersonalData(USERS[0]);
-    });
+    for(const user of USERS) {
+        commonGroup(user);
+        dispDashboardGroup(user);
+    }
 }
 
 /** Генерация html документа с визуализацией результатов тестирования */
 export function handleSummary(data) {
     return {
-        "summary.html": htmlReport(data),
+        "lk-summary.html": htmlReport(data),
     };
 }
