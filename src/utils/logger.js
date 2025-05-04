@@ -1,11 +1,12 @@
 import path from "node:path";
+import {writeFile} from "node:fs/promises";
+import {__dirname} from './const.js';
 
 function resolve(args) {
     return path.resolve(__dirname, '..', '..', args);
 }
 
 class Logger {
-    defaultLogFilePath = resolve('logs/');
 
     /** Вывод данных в консоль */
     info(data) {
@@ -13,8 +14,18 @@ class Logger {
     }
 
     /** Логирование в файл */
-    print(data, path) {
+    async printJson(data) {
+        try {
+            const fileLogName = `${new Date().toISOString()}.json`;
+            const formattedData = JSON.stringify(data, null, 2);
 
+            await writeFile(
+                resolve(`logs/${fileLogName}`),
+                formattedData
+            );
+        } catch (e) {
+            console.error('Ошибка записи лога в файл: ' + e);
+        }
     }
 }
 
