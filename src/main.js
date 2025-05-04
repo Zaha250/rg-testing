@@ -3,6 +3,21 @@ import {USERS} from "./api/request/users.js";
 import {commonGroup} from "./groups/lk/common.js";
 import {dispDashboardGroup} from "./groups/lk/dispDashboard.js";
 
+function getSummaryFileName() {
+    const now = new Date();
+
+    function pad(value) {
+        if (Number(value) < 10) {
+            return '0' + value;
+        }
+        return value.toString();
+    }
+
+    const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+    return `${date}-summary.html`;
+}
+
 export const options = {
     scenarios: {
         login: {
@@ -23,6 +38,6 @@ export default function () {
 /** Генерация html документа с визуализацией результатов тестирования */
 export function handleSummary(data) {
     return {
-        "lk-summary.html": htmlReport(data),
+        [getSummaryFileName()]: htmlReport(data),
     };
 }
