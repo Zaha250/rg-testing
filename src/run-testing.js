@@ -1,4 +1,4 @@
-const {exec} = require('child_process');
+import {exec} from "node:child_process";
 
 const command = 'docker-compose up';
 
