@@ -1,13 +1,13 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function desktopStatistics(user) {
+export function detailDispDashboardRating(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'desktop_statistics';
+    const service = 'detail_rating';
 
     const response = request.post({
         service,
@@ -16,16 +16,22 @@ export function desktopStatistics(user) {
                 date: {
                     from: '',
                     to: '',
+                },
+                location: {
+                    mode: 'city',
+                    value: '',
                 }
             },
             company: user.companyId,
-            count: 15
+            page: 1,
+            count: 10
         }
     });
     const responseJson = response.json();
 
     check(response, {
         [`${service} || Статус 200`]: (r) => r.status === 200,
-        [`${service} || Проверка bitrix code`]: () => responseJson.code && responseJson.code === 200
+        [`${service} || Проверка bitrix code`]: () => responseJson.code && responseJson.code === 200,
+        [`${service} || Проверка данных`]: () => 'ratings_info' in responseJson[service],
     });
 }

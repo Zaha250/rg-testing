@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   k6:
-    image: grafana/k6    # ⚡ Вместо билдим образа — сразу берём готовый grafana/k6
+    image: grafana/k6
     container_name: k6_test_runner
     volumes:
-      - .:/app            # Монтируем текущую папку в контейнер
+      - .:/app
     working_dir: /app
     command: run --out json=result.json src/main.js

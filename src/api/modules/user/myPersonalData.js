@@ -1,13 +1,13 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function getGroupsAndExecutors(user) {
+export function myPersonalData(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'get_groups_and_executors';
+    const service = 'my_personal_data';
 
     const response = request.post({
         service
@@ -17,6 +17,6 @@ export function getGroupsAndExecutors(user) {
     check(response, {
         [`${service} || Статус 200`]: (r) => r.status === 200,
         [`${service} || Проверка bitrix code`]: () => responseJson.code && responseJson.code === 200,
-        [`${service} || Проверка данных`]: () => 'executors' in responseJson[service] && 'groups' in responseJson[service],
+        [`${service} || ID юзера не пустой`]: () => responseJson.my_personal_data && !!responseJson.my_personal_data.id,
     });
 }

@@ -1,28 +1,18 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function ratingPreview(user) {
+export function getLabelConfiguration(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'rating_preview';
+    const service = 'get_components';
 
     const response = request.post({
         service,
         attributes: {
-            filters: {
-                date: {
-                    from: '',
-                    to: '',
-                },
-                location: {
-                    mode: 'city',
-                    value: '',
-                }
-            },
-            company: user.companyId
+            category: 'configuration'
         }
     });
     const responseJson = response.json();

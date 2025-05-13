@@ -1,14 +1,14 @@
 import {group} from 'k6';
-import {myPersonalData} from "../../api/services/myPersonalData.js";
-import {getGroupsAndExecutors} from "../../api/services/getGroupsAndExecutors.js";
-import {getSidebarComponents} from "../../api/services/getSidebarComponents.js";
-import {getCompanies} from "../../api/services/getCompanies.js";
-import {getLabelConfiguration} from "../../api/services/getLabelConfiguration.js";
-import {getModules} from "../../api/services/getModules.js";
-import {getCustomerNavbar} from "../../api/services/getCustomerNavbar.js";
-import {chatUKGetChatList} from "../../api/services/chatUKGetChatList.js";
-import {chatUKGetNewMessages} from "../../api/services/chatUKGetNewMessages.js";
-import {getChatMessages} from "../../api/services/getChatMessages.js";
+import {myPersonalData} from "../../api/modules/user/myPersonalData.js";
+import {getGroupsAndExecutors} from "../../api/modules/user/getGroupsAndExecutors.js";
+import {getSidebarComponents} from "../../api/modules/common/getSidebarComponents.js";
+import {getCompanies} from "../../api/modules/user/getCompanies.js";
+import {getLabelConfiguration} from "../../api/modules/common/getLabelConfiguration.js";
+import {getModules} from "../../api/modules/common/getModules.js";
+import {getCustomerNavbar} from "../../api/modules/common/getCustomerNavbar.js";
+import {chatUKGetChatList} from "../../api/modules/chats/chatUKGetChatList.js";
+import {chatUKGetNewMessages} from "../../api/modules/chats/chatUKGetNewMessages.js";
+import {getChatMessages} from "../../api/modules/chats/getChatMessages.js";
 
 /** Группа тестов общих сервисов */
 export function commonGroup(user) {

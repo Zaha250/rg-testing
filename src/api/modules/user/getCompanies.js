@@ -1,19 +1,16 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function getLabelConfiguration(user) {
+export function getCompanies(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'get_components';
+    const service = 'get_companies';
 
     const response = request.post({
-        service,
-        attributes: {
-            category: 'configuration'
-        }
+        service
     });
     const responseJson = response.json();
 

@@ -24,37 +24,42 @@ function randomNumber(min = 2, max = 4) {
 }
 
 export const options = {
-    vus: USERS.length,
-    iterations: 1,
+    // vus: USERS.length,
+    // iterations: 1,
     // duration: '1m30s',
     thresholds: {
         // http_req_duration: ['p(95)<1000'], //время ответа
+        // http_req_failed: ['rate < 0.01'], // Допустимо <1% ошибок
     },
-    /*scenarios: {
-        ramping: { //нагрузочный тест с ростом:
-            executor: 'ramping-vus',
+    scenarios: {
+        ramping: {
+            executor: 'ramping-vus', //нагрузочный тест с ростом:
             stages: [
                 { duration: '30s', target: 10 },
                 { duration: '1m', target: 50 },
                 { duration: '30s', target: 0 },
             ]
         },
-        rate_test: { //ровная нагрузка:
-            executor: 'constant-arrival-rate',
-            rate: 50,             // 50 итераций/секунду
+        /*rate_test: {
+            executor: 'constant-arrival-rate', //ровная нагрузка:
+            rate: 50,             // итераций/секунду
             timeUnit: '1s',
             duration: '2m',
             preAllocatedVUs: 50,  // сколько VU заранее подготовить
-        }
-    }*/
+        }*/
+    }
 };
 
 export default function () {
-    const VU_User = USERS[__VU - 1];
-    console.log(`🔹 VU ${__VU} → user: ${VU_User.login}`);
+    const user = USERS[__VU % USERS.length];
 
-    commonGroup(VU_User);
-    dispDashboardGroup(VU_User);
+    try {
+        commonGroup(user);
+        dispDashboardGroup(user);
+        sleep(randomNumber());
+    } catch (error) {
+        console.error(`VU ${__VU} failed: ${error}`);
+    }
 }
 
 /** Генерация html документа с визуализацией результатов тестирования */

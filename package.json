@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "test": "node src/run-testing.js",
+    "test": "node src/runTesting.js",
     "dev": "PORT=3005 nodemon src/server.js",
     "start": "PORT=3005 node src/server.js"
   },

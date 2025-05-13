@@ -1,16 +1,26 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function getCustomerNavbar(user) {
+export function desktopStatistics(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'customer_navbar';
+    const service = 'desktop_statistics';
 
     const response = request.post({
-        service
+        service,
+        attributes: {
+            filters: {
+                date: {
+                    from: '',
+                    to: '',
+                }
+            },
+            company: user.companyId,
+            count: 15
+        }
     });
     const responseJson = response.json();
 

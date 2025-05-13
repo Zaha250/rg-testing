@@ -1,5 +1,5 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
 export function getModules(user) {
     const request = new PhpRequest({

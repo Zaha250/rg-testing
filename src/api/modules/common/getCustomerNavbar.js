@@ -1,13 +1,13 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function chatUKGetNewMessages(user) {
+export function getCustomerNavbar(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'chat_uk_get_new_messages';
+    const service = 'customer_navbar';
 
     const response = request.post({
         service

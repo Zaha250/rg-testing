@@ -1,29 +1,20 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
-import {pad} from "../../utils/index.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function desktopInfo(user) {
+export function chatUKGetChatList(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const now = new Date();
-
-    const today = `${pad(now.getDate())}.${pad(now.getMonth() + 1)}.${now.getFullYear()}`;
-
-    const service = 'desktop_info';
+    const service = 'chat_uk_get_chat_list';
 
     const response = request.post({
         service,
         attributes: {
-            filters: {
-                date: {
-                    from: today,
-                    to: today,
-                }
-            },
-            company: user.companyId
+            "mode": "active",
+            "page": 1,
+            "pageSize": 20
         }
     });
     const responseJson = response.json();

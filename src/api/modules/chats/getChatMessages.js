@@ -1,21 +1,16 @@
 import {check} from 'k6';
-import {PhpRequest} from "../request/phpRequest.js";
+import {PhpRequest} from "../../request/phpRequest.js";
 
-export function chatUKGetChatList(user) {
+export function getChatMessages(user) {
     const request = new PhpRequest({
         login: user.login,
         password: user.password,
     });
 
-    const service = 'chat_uk_get_chat_list';
+    const service = 'get_chat_messages';
 
     const response = request.post({
-        service,
-        attributes: {
-            "mode": "active",
-            "page": 1,
-            "pageSize": 20
-        }
+        service
     });
     const responseJson = response.json();
 
