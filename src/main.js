@@ -24,14 +24,14 @@ function randomNumber(min = 2, max = 4) {
 }
 
 export const options = {
-    // vus: USERS.length,
-    // iterations: 1,
+    vus: USERS.length,
+    iterations: 1,
     // duration: '1m30s',
     thresholds: {
         // http_req_duration: ['p(95)<1000'], //время ответа
         // http_req_failed: ['rate < 0.01'], // Допустимо <1% ошибок
     },
-    scenarios: {
+    /*scenarios: {
         ramping: {
             executor: 'ramping-vus', //нагрузочный тест с ростом:
             stages: [
@@ -40,14 +40,14 @@ export const options = {
                 { duration: '30s', target: 0 },
             ]
         },
-        /*rate_test: {
+        /!*rate_test: {
             executor: 'constant-arrival-rate', //ровная нагрузка:
             rate: 50,             // итераций/секунду
             timeUnit: '1s',
             duration: '2m',
             preAllocatedVUs: 50,  // сколько VU заранее подготовить
-        }*/
-    }
+        }*!/
+    }*/
 };
 
 export default function () {
