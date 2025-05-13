@@ -1,6 +1,7 @@
 import {htmlReport} from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 import {sleep} from 'k6';
 import {USERS} from "./api/request/users.js";
+import {auth} from "./api/modules/common/auth.js";
 import {commonGroup} from "./groups/lk/common.js";
 import {dispDashboardGroup} from "./groups/lk/dispDashboard.js";
 
@@ -54,8 +55,16 @@ export default function () {
     const user = USERS[__VU % USERS.length];
 
     try {
-        commonGroup(user);
-        dispDashboardGroup(user);
+        const authData = auth(user);
+        const accessToken = authData['access_token'];
+
+        const expandedUser = {
+            ...user,
+            accessToken
+        }
+
+        commonGroup(expandedUser);
+        dispDashboardGroup(expandedUser);
         sleep(randomNumber());
     } catch (error) {
         console.error(`VU ${__VU} failed: ${error}`);

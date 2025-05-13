@@ -1,7 +1,9 @@
 import {group} from 'k6';
-import {detailDispDashboardRating} from "../../api/modules/dispDashboard/detailRating.js";
-import {desktopStatistics} from "../../api/modules/dispDashboard/desktopStatistics.js";
-import {desktopInfoWithRatingPreview} from "../../api/modules/dispDashboard/desktopInfoWithRatingPreview.js";
+import {
+    detailDispDashboardRating,
+    desktopInfoWithRatingPreview,
+    desktopStatistics
+} from "../../api/modules/dispDashboard/index.js";
 
 /** Группа тестов сервисов, вызываемых со страницы /demo/dispetcher/dispatcher_work_area/ */
 export function dispDashboardGroup(user) {

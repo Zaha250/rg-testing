@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "test": "node src/runTesting.js",
+    "test": "docker-compose up",
     "dev": "PORT=3005 nodemon src/server.js",
     "start": "PORT=3005 node src/server.js"
   },
