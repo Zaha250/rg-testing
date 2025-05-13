@@ -1,7 +1,9 @@
 import http from 'k6/http';
 import {getBasicAuth} from "./utils.js";
 
-const API_URL = 'https://test.rozentalgroup.ru/version2/entry.php';
+const DOMAIN = 'https://test.rozentalgroup.ru';
+export const PHP_API_URL = `${DOMAIN}/version2/entry.php`;
+export const GO_API_URL = `${DOMAIN}/go`;
 
 export class PhpRequest {
     BASIC_AUTH;
@@ -12,14 +14,11 @@ export class PhpRequest {
 
     _defaultHeaders = () => {
         return {
-            Authorization: this.BASIC_AUTH,
-            'Content-Type': 'application/json',
-            Accept: 'application/json, text/plain, */*',
+            Authorization: this.BASIC_AUTH
         }
     }
 
     _prepareData = ({service, attributes}) => {
-        // return packageFormData(service, attributes);
         return JSON.stringify({
             name: service,
             attributes,
@@ -30,11 +29,26 @@ export class PhpRequest {
         const data = this._prepareData({service, attributes});
 
         return http.post(
-            `${API_URL}?_${service}`,
+            `${PHP_API_URL}?_${service}`,
             data,
             {
                 headers: {
                     ...this._defaultHeaders(),
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json, text/plain, */*',
+                    ...(options.headers ? options.headers : {})
+                }
+            });
+    }
+
+    postFormData = (data, options = {}) => {
+        return http.post(
+            PHP_API_URL,
+            data,
+            {
+                headers: {
+                    ...this._defaultHeaders(),
+                    'Content-Type': 'multipart/form-data',
                     ...(options.headers ? options.headers : {})
                 }
             });

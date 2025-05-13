@@ -2,13 +2,11 @@ import {group} from 'k6';
 import {myPersonalData} from "../../api/modules/user/myPersonalData.js";
 import {getGroupsAndExecutors} from "../../api/modules/user/getGroupsAndExecutors.js";
 import {getSidebarComponents} from "../../api/modules/common/getSidebarComponents.js";
-import {getCompanies} from "../../api/modules/user/getCompanies.js";
-import {getLabelConfiguration} from "../../api/modules/common/getLabelConfiguration.js";
-import {getModules} from "../../api/modules/common/getModules.js";
-import {getCustomerNavbar} from "../../api/modules/common/getCustomerNavbar.js";
 import {chatUKGetChatList} from "../../api/modules/chats/chatUKGetChatList.js";
 import {chatUKGetNewMessages} from "../../api/modules/chats/chatUKGetNewMessages.js";
 import {getChatMessages} from "../../api/modules/chats/getChatMessages.js";
+import {getCompaniesAngLabelConfiguration} from "../../api/modules/common/getCompaniesAngLabelConfiguration.js";
+import {getModulesAndCustomerNavbar} from "../../api/modules/common/getModulesAndCustomerNavbar.js";
 
 /** Группа тестов общих сервисов */
 export function commonGroup(user) {
@@ -16,10 +14,8 @@ export function commonGroup(user) {
         myPersonalData(user);
         getGroupsAndExecutors(user);
         getSidebarComponents(user);
-        getCompanies(user);
-        getLabelConfiguration(user);
-        getModules(user);
-        getCustomerNavbar(user);
+        getCompaniesAngLabelConfiguration(user);
+        getModulesAndCustomerNavbar(user);
         chatUKGetChatList(user);
         chatUKGetNewMessages(user);
         getChatMessages(user);
