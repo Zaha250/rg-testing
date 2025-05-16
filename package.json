@@ -2,10 +2,11 @@
   "name": "rg-k6",
   "version": "1.0.0",
   "description": "Нагрузочное тестирование с использованием k6",
-  "main": "src/main.js",
+  "main": "src/web-main.js",
   "type": "module",
   "scripts": {
-    "test": "docker-compose up",
+    "test": "PLATFORM=web docker-compose up",
+    "test:mobile": "PLATFORM=mobile docker-compose up",
     "dev": "PORT=3005 nodemon src/server.js",
     "start": "PORT=3005 node src/server.js"
   },

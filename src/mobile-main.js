@@ -2,8 +2,7 @@ import {htmlReport} from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/
 import {sleep} from 'k6';
 import {USERS} from "./api/request/users.js";
 import {auth} from "./api/modules/common/auth.js";
-import {commonGroup} from "./groups/lk/common.js";
-import {dispDashboardGroup} from "./groups/lk/dispDashboard.js";
+import {mobileDashboardGroup} from "./groups/mobile/dashboard.js";
 
 function getSummaryFileName() {
     const now = new Date();
@@ -17,7 +16,7 @@ function getSummaryFileName() {
 
     const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 
-    return `${date}-summary.html`;
+    return `${date}-summary-mobile.html`;
 }
 
 function randomNumber(min = 2, max = 4) {
@@ -55,7 +54,12 @@ export default function () {
     const user = USERS[__VU % USERS.length];
 
     try {
-        const authData = auth(user);
+        const authData = auth(user, {
+            model: 'grafana/k6',
+            app_version: '9.99',
+            system: 'android',
+            firebase_token: 'K6_MOCK_TOKEN',
+        });
         const accessToken = authData['access_token'];
 
         const expandedUser = {
@@ -63,8 +67,7 @@ export default function () {
             accessToken
         }
 
-        commonGroup(expandedUser);
-        dispDashboardGroup(expandedUser);
+        mobileDashboardGroup(expandedUser);
         sleep(randomNumber());
     } catch (error) {
         console.error(`VU ${__VU} failed: ${error}`);

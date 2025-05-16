@@ -1,5 +1,7 @@
 .idea
 *summary.html
+*summary-web.html
+*summary-mobile.html
 result.json
 
 logs

@@ -1,7 +1,8 @@
 import {check} from 'k6';
 import {Request} from "../../request/request.js";
+import {logger} from "../../../utils/logger.js";
 
-export function auth(user) {
+export function auth(user, device) {
     const request = new Request({
         token: ''
     });
@@ -14,14 +15,10 @@ export function auth(user) {
                 login: user.login,
                 password: user.password,
             },
-            device: {
-                model: 'grafana/k6',
-                app_version: '',
-                system: 'web',
-                firebase_token: '',
-            }
+            device
         });
         const responseJson = response.json();
+        console.log({authData: responseJson})
 
         check(response, {
             [`${url} || Статус 200`]: (r) => r.status === 200,

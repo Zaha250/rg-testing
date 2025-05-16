@@ -5,7 +5,7 @@ import {getSummaryFileName} from "../utils/getSummaryFileName.js";
 export const lkRouter = express.Router();
 
 lkRouter.get('/start-testing', (req, res) => {
-    const command = 'docker-compose up';
+    const command = 'PLATFORM=web docker-compose up';
 
     exec(command, (err, stdout, stderr) => {
         if(err) {
@@ -16,6 +16,6 @@ lkRouter.get('/start-testing', (req, res) => {
             return;
         }
         console.log(stdout);
-        res.send(`${stdout}\n${getSummaryFileName()}`);
+        res.send(`${stdout}\n${getSummaryFileName('web')}`);
     });
 });
