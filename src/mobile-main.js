@@ -3,6 +3,8 @@ import {sleep} from 'k6';
 import {USERS} from "./api/request/users.js";
 import {auth} from "./api/modules/common/auth.js";
 import {mobileDashboardGroup} from "./groups/mobile/dashboard.js";
+import {afterMetersPush} from "./groups/mobile/afterMetersPush.js";
+import {afterPaymentPush} from "./groups/mobile/afterPaymentPush.js";
 
 function getSummaryFileName() {
     const now = new Date();
@@ -67,7 +69,9 @@ export default function () {
             accessToken
         }
 
-        mobileDashboardGroup(expandedUser);
+        // mobileDashboardGroup(expandedUser);
+        afterMetersPush(expandedUser);
+        // afterPaymentPush(expandedUser);
         sleep(randomNumber());
     } catch (error) {
         console.error(`VU ${__VU} failed: ${error}`);

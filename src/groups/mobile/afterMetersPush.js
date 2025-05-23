@@ -3,17 +3,16 @@ import {
     intercomAvailableSipAndIntercomRegisterSip
 } from "../../api/modules/intercom/index.js";
 import {myTreatmentsNoRates} from "../../api/modules/treatments/index.js";
-import {myProfileAndCustomerDashboard} from "../../api/modules/user/index.js";
-import {mobileBadges} from "../../api/modules/common/mobileBadges.js";
+import {metersDashboard, meterData} from "../../api/modules/meters/index.js";
 
 /**
- * Api, вызываемые на главном экране МП жителя
+ * api, вызываемое после перехода по автоматическому пушу по передаче показаний
  * */
-export function mobileDashboardGroup(user) {
+export function afterMetersPush(user) {
     getDictionaries(user.accessToken);
 
-    mobileBadges(user);
     intercomAvailableSipAndIntercomRegisterSip(user);
-    myProfileAndCustomerDashboard(user);
+    metersDashboard(user);
+    meterData(user);
     myTreatmentsNoRates(user);
 }

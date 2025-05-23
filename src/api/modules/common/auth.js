@@ -1,6 +1,5 @@
 import {check} from 'k6';
 import {Request} from "../../request/request.js";
-import {logger} from "../../../utils/logger.js";
 
 export function auth(user, device) {
     const request = new Request({

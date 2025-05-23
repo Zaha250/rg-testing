@@ -1,0 +1,1 @@
+export {gkhPaymentData} from './gkhPaymentData.js';
