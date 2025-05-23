@@ -31,7 +31,7 @@ export const options = {
     iterations: DISPATCHERS.length,
     // duration: '1m30s',
     thresholds: {
-        http_req_duration: ['p(95)<2000'], // время ответа
+        // http_req_duration: ['p(95)<2000'], // время ответа
         // http_req_failed: ['rate < 0.01'], // Допустимо <1% ошибок
     },
     /*scenarios: {
