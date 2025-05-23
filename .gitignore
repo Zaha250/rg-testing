@@ -5,3 +5,5 @@
 result-*.json
 
 logs
+
+node_modules
