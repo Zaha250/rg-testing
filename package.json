@@ -5,8 +5,8 @@
   "main": "src/web-main.js",
   "type": "module",
   "scripts": {
-    "test": "PLATFORM=web docker-compose up",
-    "test:mobile": "PLATFORM=mobile docker-compose up",
+    "test": "docker-compose up k6-web",
+    "test:mobile": "docker-compose up k6-mobile",
     "dev": "PORT=3005 nodemon src/server.js",
     "start": "PORT=3005 node src/server.js"
   },

@@ -1,12 +1,18 @@
 version: '3.8'
 
 services:
-  k6:
+  k6-web:
     image: grafana/k6
-    container_name: k6_test_runner
+    container_name: k6_web_test_runner
     volumes:
       - .:/app
     working_dir: /app
-    environment:
-      - PLATFORM=web
-    command: run --out json=result.json src/${PLATFORM}-main.js
+    command: run --out json=result-web.json src/web-main.js
+
+  k6-mobile:
+    image: grafana/k6
+    container_name: k6_mobile_test_runner
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: run --out json=result-mobile.json src/mobile-main.js
