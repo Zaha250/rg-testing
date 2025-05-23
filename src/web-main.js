@@ -1,6 +1,6 @@
 import {htmlReport} from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 import {sleep} from 'k6';
-import {USERS} from "./api/request/users.js";
+import {USERS} from "./users.js";
 import {auth} from "./api/modules/common/auth.js";
 import {commonGroup} from "./groups/lk/common.js";
 import {dispDashboardGroup} from "./groups/lk/dispDashboard.js";
@@ -24,12 +24,14 @@ function randomNumber(min = 2, max = 4) {
     return Math.random() * (max - min) + min;
 }
 
+const DISPATCHERS = USERS.filter(user => user.role === 'dispatcher');
+
 export const options = {
-    vus: USERS.length,
-    iterations: 1,
+    vus: DISPATCHERS.length,
+    iterations: DISPATCHERS.length,
     // duration: '1m30s',
     thresholds: {
-        // http_req_duration: ['p(95)<1000'], //время ответа
+        http_req_duration: ['p(95)<2000'], // время ответа
         // http_req_failed: ['rate < 0.01'], // Допустимо <1% ошибок
     },
     /*scenarios: {
@@ -52,7 +54,7 @@ export const options = {
 };
 
 export default function () {
-    const user = USERS[__VU % USERS.length];
+    const user = DISPATCHERS[__VU % DISPATCHERS.length];
 
     try {
         const authData = auth(user, {

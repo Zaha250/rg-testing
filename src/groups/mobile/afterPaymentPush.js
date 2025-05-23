@@ -1,3 +1,4 @@
+import {group} from 'k6';
 import {getDictionaries} from "../../api/modules/common/index.js";
 import {
     intercomAvailableSipAndIntercomRegisterSip
@@ -9,9 +10,11 @@ import {gkhPaymentData} from "../../api/modules/payment/index.js";
  * api, вызываемое после перехода по автоматическому пушу о напоминании об оплате
  * */
 export function afterPaymentPush(user) {
-    getDictionaries(user.accessToken);
+    group('Переход по пушу о напоминании об оплате', function () {
+        getDictionaries(user.accessToken);
 
-    intercomAvailableSipAndIntercomRegisterSip(user);
-    gkhPaymentData(user);
-    myTreatmentsNoRates(user);
+        intercomAvailableSipAndIntercomRegisterSip(user);
+        gkhPaymentData(user);
+        myTreatmentsNoRates(user);
+    });
 }

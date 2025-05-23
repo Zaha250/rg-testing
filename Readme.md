@@ -1,0 +1,5 @@
+- per-vu-iterations - Поведение конкретных пользователей (логины, сессии)
+- constant-vus - Стабильность под постоянной нагрузкой
+- ramping-vus или ramping-arrival-rate - Устойчивость при росте нагрузки
+- 	constant-arrival-rate - Скорость обработки при заданной частоте запросов
+- shared-iterations или ramping-arrival-rate - Максимальная производительность системы

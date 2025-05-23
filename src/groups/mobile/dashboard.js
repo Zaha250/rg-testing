@@ -1,3 +1,4 @@
+import {group} from 'k6';
 import {getDictionaries} from "../../api/modules/common/index.js";
 import {
     intercomAvailableSipAndIntercomRegisterSip
@@ -10,10 +11,12 @@ import {mobileBadges} from "../../api/modules/common/mobileBadges.js";
  * Api, вызываемые на главном экране МП жителя
  * */
 export function mobileDashboardGroup(user) {
-    getDictionaries(user.accessToken);
+    group('Dashboard МП жителя', function () {
+        getDictionaries(user.accessToken);
 
-    mobileBadges(user);
-    intercomAvailableSipAndIntercomRegisterSip(user);
-    myProfileAndCustomerDashboard(user);
-    myTreatmentsNoRates(user);
+        mobileBadges(user);
+        intercomAvailableSipAndIntercomRegisterSip(user);
+        myProfileAndCustomerDashboard(user);
+        myTreatmentsNoRates(user);
+    });
 }

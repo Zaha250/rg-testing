@@ -1,10 +1,12 @@
 import {htmlReport} from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 import {sleep} from 'k6';
-import {USERS} from "./api/request/users.js";
+import {USERS} from "./users.js";
 import {auth} from "./api/modules/common/auth.js";
+import {mobileLogin} from "./groups/mobile/mobileLogin.js";
 import {mobileDashboardGroup} from "./groups/mobile/dashboard.js";
 import {afterMetersPush} from "./groups/mobile/afterMetersPush.js";
 import {afterPaymentPush} from "./groups/mobile/afterPaymentPush.js";
+import {mobileLoginWithConfig} from "./api/modules/user/index.js";
 
 function getSummaryFileName() {
     const now = new Date();
@@ -25,9 +27,11 @@ function randomNumber(min = 2, max = 4) {
     return Math.random() * (max - min) + min;
 }
 
+const CUSTOMERS = USERS.filter(user => user.role === 'customer');
+
 export const options = {
-    vus: USERS.length,
-    iterations: 1,
+    vus: CUSTOMERS.length,
+    iterations: CUSTOMERS.length,
     // duration: '1m30s',
     thresholds: {
         // http_req_duration: ['p(95)<1000'], //время ответа
@@ -53,9 +57,11 @@ export const options = {
 };
 
 export default function () {
-    const user = USERS[__VU % USERS.length];
+    const user = CUSTOMERS[__VU % CUSTOMERS.length];
 
     try {
+        mobileLogin(user);
+
         const authData = auth(user, {
             model: 'grafana/k6',
             app_version: '9.99',
@@ -69,8 +75,8 @@ export default function () {
             accessToken
         }
 
-        // mobileDashboardGroup(expandedUser);
-        afterMetersPush(expandedUser);
+        mobileDashboardGroup(expandedUser);
+        // afterMetersPush(expandedUser);
         // afterPaymentPush(expandedUser);
         sleep(randomNumber());
     } catch (error) {
